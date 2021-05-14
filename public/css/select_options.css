@@ -1,0 +1,48 @@
+
+input[type=checkbox].offCheckbox {
+    visibility: hidden;
+    float: left;
+    background-size: cover;
+    display: inline-block;
+   
+}
+
+label.lix {
+    margin-bottom: -17px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+label.asel:hover {
+    background: red;
+}
+
+input:checked + label.asel {
+  
+    background: red;
+ }
+
+label.asel{
+    background:#71bac3;
+    border:1px solid #71bac3;
+    color:#ffffff;
+    text-shadow:none;
+    border-style:none;
+    border-width:1px;}
+  
+
+   .asel i:before{
+       color:rgba(255, 255, 255, 0.5);
+       text-shadow:none;
+    }
+
+    input:checked + input.teste{
+
+        background:red;
+    }
+
+
+ 
+ 
+
+
