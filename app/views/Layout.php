@@ -57,27 +57,18 @@
                     
                     <ul id="menu" class="hidden-phone">
                         <li class="active">
-                        <a href="<?php echo DIRPAGE?>home" class="menuToggle">Home</a>
+                        <a href="<?php echo DIRPAGE?>home" class="menuToggle">Lorem Ipsum</a>
                         </li>
                         
-                        <li>
-
-                            <a class="menuToggle">Cadastrar</a>
-                              <ul class="menu hide">
-                                  <li><a href="<?php echo DIRPAGE?>fragancia"><span>Fragância</span></a></li>
-                                  <li><a href="<?php echo DIRPAGE?>alcool"><span>Alcool</span></a></li>
-                                  <li><a href="<?php echo DIRPAGE?>agua"><span>Agua</span></a></li>
-                           
-                                </ul>
-                        </li>
-                        <li> 
-                            
-                          <a class="menuToggle">Estoques</a>
-                          <ul class="menu hide">
-                                  <li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
         
     <!-- Main -->
     <div class="container-fluid fixed">
+
     
        <?php $this->addMain(); ?>
     
