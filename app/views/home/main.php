@@ -1,7 +1,7 @@
 <div id="content">
-    <h3 class="glyphicons notes_2">
-        <i>Projetos</i>
-    </h3>
+    <h4 class="glyphicons notes_2">
+        <i>Cadastro de Projetos</i>
+    </h4>
     <form>
         <!--FORM DE CADASTRO DE PROJETOS-->
         <div class="row-fluid">
@@ -135,13 +135,23 @@
     </form>
 </div>
 
-<div class="row-fluid">
-    <div class="span12">
-        <div>
+<hr>
 
+<div id="content">
+
+
+<h4 class="glyphicons notes_2">
+        <i>Projetos</i>
+    </h4>
+
+<div class="row-fluid">
+
+    <div class="span12">
+    
             <?php
-           // $TabeladeProjetos            
+            $Porjetos = new App\Controllers\ControllerHome;
+            $Porjetos->Lista_de_Projetos();            
             ?>
-        </div>
     </div>
+</div>
 </div>
