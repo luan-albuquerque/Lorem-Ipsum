@@ -1,7 +1,7 @@
 # Lorem-Ipsum
 
 Sistema para o grupo Lorem Ipsum Inc. gerenciar os cadastros de projetos, seu tempo de duração e realizar uma simulação do cálculo de retorno do investimento.
-Vizualização de Preview do Sistema [Preview.pdf](https://github.com/luan-albuquerque/Lorem-Ipsum/Preview.pdf) para detalhes.
+Vizualização de Preview do Sistema [Preview.pdf](https://github.com/luan-albuquerque/Lorem-Ipsum/blob/main/Preview.pdf) para detalhes.
 
 ### 📋 Pré-requisitos
 POO - Programação baseada no conceito de Objetos.
