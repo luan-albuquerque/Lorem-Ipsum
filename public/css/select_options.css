@@ -42,7 +42,11 @@ label.asel{
     }
 
 
- 
+.oculto{
+
+    visibility: hidden;
+
+} 
  
 
 
