@@ -10,10 +10,10 @@
                 <!--1° ROW-->
                 <div class="span4">
                     <div class="control-group">
-                        <label class="control-label">Nome do Projeto *</label>
+                        <label class="control-label">Nome do Projeto</label>
                         <div class="controls">
                             <div class="input-append">
-                                <input name="nprojeto" type="text" id="idprojeto" class="span12" placeholder="Ex: Controle de Servos" require>
+                                <input name="nprojeto" type="text" id="idprojeto" class="span12" placeholder="Ex: Controle de Servos" required>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                         <label class="control-label"> Risco </label>
                         <div class="controls">
                             <div class="input-append">
-                                <select class="span12" name="nrisco" id="idrisco">
+                                <select class="span12" name="nrisco" id="idrisco" required>
                                     <option selected="selected">Selecione</option>
                                     <option value="0">Baixo</option>
                                     <option value="1">Médio</option>
@@ -124,7 +124,6 @@
 
                 </div>
             </div>
-
             <div class="row-fluid">
             <!--3° ROW -->
             <div class="span12">
@@ -140,9 +139,10 @@
 <div id="content">
 
 
-<h4 class="glyphicons notes_2">
+<h4 class="glyphicons table">
         <i>Projetos</i>
     </h4>
+<br>
 
 <div class="row-fluid">
 
