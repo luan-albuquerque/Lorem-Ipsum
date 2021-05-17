@@ -46,7 +46,8 @@ private function controleDeMetodos()
     $this->MetodoExecutavel = array(
         #CHAMADA NA URL => METODO DE CONTROLER
         "CADADTRAR-ALGO" => "Cadastrar",
-        "Formulario-de-Edição-Projeto" => "FormUpdate"
+        "Formulario-de-Edição-Projeto" => "FormUpdate",
+        "Alterar-Projeto" => "Update"
         
     );
 

@@ -206,7 +206,7 @@ class ControllerHome
                 <div class='modal-content' style='padding: 15px 15px;'>
                 <h5 class='modal-title' id='exampleModalLabel'>Edição de Projetos</h5>
         
-                <form>
+                <form method='POST' action='" . DIRPAGE . "home/Alterar-Projeto'>
                 <!--FORM DE CADASTRO DE PROJETOS-->
                 <div class='row-fluid'>   
                     <div class='row-fluid'>
@@ -285,7 +285,23 @@ class ControllerHome
                   <hr>
 
                   <div class='row-floid'>
-                  <h5 class='modal-title' id='exampleModalLabel'>Participantes</h5>    
+                  <h5 class='modal-title' id='exampleModalLabel'>Participantes</h5>
+
+                  
+                  <table cellspacing='0' cellpadding='4' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
+	             ";
+        $Lista = $this->ArrayTeste();
+        $I = 0;
+        foreach ($Lista as $dados) {
+            echo " <tr id='$I'><td><input name='name[]' value='$dados'></td> 
+                     <td> <input class='btn btn-primary' type='button' value='Excluir' onclick='delete_row($I)'></td> 
+                   </tr>";
+            $I++;
+        }
+        echo "
+                  </table>
+                  <hr>
+                  <input class='btn btn-primary' type='submit' value='Alterar'>
 
                   </div>
                 </div>
@@ -294,5 +310,21 @@ class ControllerHome
                 </div>
             </div>
         </div> <!-- FIM DO MODAL-->";
+    }
+
+    public function ArrayTeste()
+    {
+        $Array = array(
+            "Luan Albuquerque dos Santos",
+            "Pedro Vitor",
+        );
+        return $Array;
+    }
+
+    public function Update()
+    {
+        $this->recValores();
+
+    echo $this->participantes;
     }
 }
