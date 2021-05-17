@@ -17,10 +17,10 @@ define('DIRJS', "http://{$_SERVER['HTTP_HOST']}/{$PastaInterna}public/js/");
 define('DIRTHEME', "http://{$_SERVER['HTTP_HOST']}/{$PastaInterna}public/theme/");
 define('DIRBOOTSTRAP', "http://{$_SERVER['HTTP_HOST']}/{$PastaInterna}public/bootstrap/");
 
-define('HOST', '');
-define('USER', '');
-define('PASS', "");
-define('DB', '');
+define('HOST', 'localhost');
+define('USER', 'admin');
+define('PASS', "<1312>");
+define('DB', 'LOREMIPSUM');
 
 
 ?>
