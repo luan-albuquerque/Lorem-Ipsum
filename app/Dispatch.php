@@ -45,11 +45,11 @@ private function controleDeMetodos()
 
     $this->MetodoExecutavel = array(
         #CHAMADA NA URL => METODO DE CONTROLER
-        "CADADTRAR-ALGO" => "Cadastrar",
         "Formulario-de-Edição-Projeto" => "FormUpdate",
         "Alterar-Projeto" => "Update",
-        "Deletar-Projeto" => "Delete",
-        "Simulação-de-Investimento" => "Invest"
+        "Deletar-Projeto" => "Excluir",
+        "Simulação-de-Investimento" => "Invest",
+        "Cadastrar-Projeto" => "Cadastrar"
     );
 
     return $this->MetodoExecutavel;
