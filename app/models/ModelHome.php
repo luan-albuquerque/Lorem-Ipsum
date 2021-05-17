@@ -50,4 +50,17 @@ protected function ListProjetosEsp($ID){
   
   }
 
+
+  protected function DeletarProjeto($ID)
+  {
+
+      if (isset($ID)) {
+          $this->db = $this->connectionMysql()
+              ->prepare("DELETE FROM PROJETO WHERE ID_PROJ=:ID");
+          $this->db->bindParam(":ID", $ID, \PDO::PARAM_INT);
+          $this->db->execute();
+      }
+  }
+
+
 }
