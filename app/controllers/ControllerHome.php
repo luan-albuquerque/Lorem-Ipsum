@@ -47,13 +47,22 @@ class ControllerHome extends ModelHome {
 
     # METODOS OCULTOS E FUNÇÕES CRUD
 
+    public function Excluir(){
+      
+      $this->recValores();
+
+            
+
+    }
+
 
 
     public function Lista_de_Projetos()
     {
           $result = $this->ListProjetos();
         echo "
-        <form id='formexcluir' method='POST' action='".DIRPAGE."home/Deletar-Projeto'>
+          
+        <form id='formexcluir'  method='POST' action='".DIRPAGE."home/Deletar-Projeto'>
         <table cellspacing='0' cellpadding='4' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
 	
         <!--DEF DE COLUNAS -->
@@ -126,7 +135,7 @@ class ControllerHome extends ModelHome {
         <!--FIM DO TR DE ADIÇÃO-->
 	       </table>
           <hr>
-           <input n class='redirect btn btn-primary' value='Excluir' for='formexcluir' type='submit'>
+           <input type='submit' class='redirect btn btn-primary' value='Excluir' name='Excluir' onclick='formExcluir()' for='formexcluir' >
 
            </form>";
           
