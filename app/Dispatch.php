@@ -47,8 +47,9 @@ private function controleDeMetodos()
         #CHAMADA NA URL => METODO DE CONTROLER
         "CADADTRAR-ALGO" => "Cadastrar",
         "Formulario-de-Edição-Projeto" => "FormUpdate",
-        "Alterar-Projeto" => "Update"
-        
+        "Alterar-Projeto" => "Update",
+        "Deletar-Projeto" => "Delete",
+        "Simulação-de-Investimento" => "Invest"
     );
 
     return $this->MetodoExecutavel;
