@@ -6,9 +6,10 @@ use App\models\ModelHome;
 use DateTime;
 use Src\Classes\ClassRender;
 
-class ControllerHome extends ModelHome {
+class ControllerHome extends ModelHome
+{
 
-    private $nomeP, $dtinicial, $dtfinal, $participantes, $valorP, $risco, $Array,$codDel;
+    private $nomeP, $dtinicial, $dtfinal, $participantes, $valorP, $risco, $Array, $codDel, $ID;
     public function __construct()
     {
         $Render = new ClassRender;
@@ -21,6 +22,9 @@ class ControllerHome extends ModelHome {
     private function recValores()
     {
         # RECOLHENDO MEUS VALORES DOS MEUS INPUT
+        if (isset($_POST['idcod'])) {
+            $this->ID = filter_input(INPUT_POST, 'idcod', FILTER_SANITIZE_SPECIAL_CHARS);
+        }
 
         if (isset($_POST['nprojeto'])) {
             $this->nomeP = filter_input(INPUT_POST, 'nprojeto', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -40,29 +44,47 @@ class ControllerHome extends ModelHome {
         if (isset($_POST['name'])) {
             $this->participantes = $_POST['name'];
         }
-        if(isset($_POST['id_cod'])){
-            $this->codDel = $_POST['id_cod'];        }
+        if (isset($_POST['id_cod'])) {
+            $this->codDel = $_POST['id_cod'];
+        }
     }
+
 
 
     # METODOS OCULTOS E FUNÇÕES CRUD
 
-    public function Excluir(){
-      
-      $this->recValores();
+    public function Excluir()
+    {
 
-            
+        $this->recValores();
+        foreach ($this->codDel as $dadosdel) {
+            $this->DeletarProjetos($dadosdel);
+        }
+    }
 
+    public function Update()
+    {
+        $this->recValores();
+
+        $JuncaoP = implode("/", $this->participantes);
+       
+        $this->UpdateProjeto($this->ID, $this->nomeP, $this->dtinicial, $this->dtfinal, $this->valorP, $this->risco, $JuncaoP);
+    }
+
+    public function Cadastrar(){
+    $this->recValores();
+  $JuncaoP = implode("/", $this->participantes);
+$this->CadastrarProjeto($this->nomeP, $this->dtinicial, $this->dtfinal, $this->valorP, $this->risco, $JuncaoP);
     }
 
 
 
     public function Lista_de_Projetos()
     {
-          $result = $this->ListProjetos();
+        $result = $this->ListProjetos();
         echo "
           
-        <form id='formexcluir'  method='POST' action='".DIRPAGE."home/Deletar-Projeto'>
+        <form id='formexcluir'  method='POST' action='" . DIRPAGE . "home/Deletar-Projeto'>
         <table cellspacing='0' cellpadding='4' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
 	
         <!--DEF DE COLUNAS -->
@@ -82,14 +104,14 @@ class ControllerHome extends ModelHome {
         <!--FIM DEF DE COLUNAS-->
         <!-- TR DE VALORES ACRESCENTA -->
     ";
-
+        $I = 0;
         foreach ($result as $dados) {
-    
-           $dataI = new DateTime($dados['DTI']);
+
+            $dataI = new DateTime($dados['DTI']);
             $dtI = $dataI->format('d/m/Y');
             $dataF = new DateTime($dados['DTF']);
             $dtF = $dataI->format('d/m/Y');
-        echo "
+            echo "
         <tr align='center' style='background-color:#E3EAEB;'>
 			
             <td><STRONG>$dados[COD]</STRONG></td>
@@ -110,11 +132,11 @@ class ControllerHome extends ModelHome {
 
             <td> <input type='hidden' id='Teste' name=''>
             <label class='btn-action glyphicons btn-info group' id='l1' for='Teste'>
-            <a title='Participantes' data-toggle='modal' data-target='#ModalParticipantes'> 
+            <a title='Participantes' data-toggle='modal' data-target='#ModalParticipantes$I'> 
             <i></i></a></label> </td>";
 
-            $this->ModalParticipantes($dados['P']);
-
+            $this->ModalParticipantes($dados['P'], $I);
+            $I++;
             echo "
             <td>
             
@@ -129,7 +151,7 @@ class ControllerHome extends ModelHome {
 
             ";
         }
-  
+
 
         echo "
         <!--FIM DO TR DE ADIÇÃO-->
@@ -138,12 +160,10 @@ class ControllerHome extends ModelHome {
            <input type='submit' class='redirect btn btn-primary' value='Excluir' name='Excluir' onclick='formExcluir()' for='formexcluir' >
 
            </form>";
-          
-          
     }
 
 
-    public function Invest($Valor,$Risco)
+    public function Invest($Valor, $Risco)
     {
 
         echo "
@@ -192,10 +212,10 @@ class ControllerHome extends ModelHome {
     }
 
 
-    private function ModalParticipantes($ArratP)
+    private function ModalParticipantes($ArratP, $I)
     {
-        $Participantes = explode("/", rtrim($ArratP,FILTER_SANITIZE_STRING));
-        echo "<div class='modal fade' id='ModalParticipantes' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+        $Participantes = explode("/", rtrim($ArratP, FILTER_SANITIZE_STRING));
+        echo "<div class='modal fade' id='ModalParticipantes$I' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
 <div class='modal-dialog' role='document'>
   <div class='modal-content'>
     <div class='modal-header'>
@@ -232,9 +252,10 @@ class ControllerHome extends ModelHome {
             <div class='modal-dialog modal-lg' role='document'>
                 <div class='modal-content' style='padding: 15px 15px;'>
                 <h5 class='modal-title' id='exampleModalLabel'>Edição de Projetos</h5>
-        
-                <form method='POST' action='" . DIRPAGE . "home/Alterar-Projeto'>
+          
+                <form  method='POST' action='" . DIRPAGE . "home/Alterar-Projeto'>
                 <!--FORM DE CADASTRO DE PROJETOS-->
+                <input type='hidden' name='idcod' value='$dados[COD]'> 
                 <div class='row-fluid'>   
                     <div class='row-fluid'>
                         <!--1° ROW-->
@@ -294,8 +315,8 @@ class ControllerHome extends ModelHome {
                                 <label class='control-label'> Risco </label>
                                 <div class='controls'>
                                     <div class='input-append'>
-                                        <select class='span12' name='nrisco' id='idrisco' required>
-                                            <option selected='selected'>Selecione</option>
+                                        <select class='span12' name='nrisco' id='idriscoF' required>
+                                            <option disabled selected value=''>Selecione</option>
                                             <option value='0'>Baixo</option>
                                             <option value='1'>Médio</option>
                                             <option value='2'>Alto</option>
@@ -315,20 +336,22 @@ class ControllerHome extends ModelHome {
                   <h5 class='modal-title' id='exampleModalLabel'>Participantes</h5>
 
                   
-                  <table cellspacing='0' cellpadding='4' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
+                  <table id='employee_table2' cellspacing='0' cellpadding='4 align='center' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
 	             ";
-        $Lista = explode("/", rtrim($dados['P'],FILTER_SANITIZE_STRING));
+        $Lista = explode("/", rtrim($dados['P'], FILTER_SANITIZE_STRING));
         $I = 0;
         foreach ($Lista as $dados) {
-            echo " <tr id='$I'><td><input name='name[]' value='$dados'></td> 
+
+            echo " <tr id='$I'><td><input class='span8' type='text' name='name[]' value='$dados'></td> 
                      <td> <input class='btn btn-primary' type='button' value='Excluir' onclick='delete_row($I)'></td> 
                    </tr>";
             $I++;
         }
         echo "
                   </table>
+                  <input class='btn btn-primary' type='button' onclick='add_rowEdit()' value='Novo Participante'> 
                   <hr>
-                  <input class='btn btn-primary' type='submit' value='Alterar'>
+                  <input class='btn btn-primary' onclick='checkFormUpdate()' id='subAlterar' type='submit'  value='Alterar'>
 
                   </div>
                 </div>
@@ -337,17 +360,5 @@ class ControllerHome extends ModelHome {
                 </div>
             </div>
         </div> <!-- FIM DO MODAL-->";
-    }
-
-    public function Update()
-    {   $this->recValores();
-
-
-}
-
-    public function Delete(){
-        $this->recValores();
-        var_dump($this->codDel);
-
     }
 }
