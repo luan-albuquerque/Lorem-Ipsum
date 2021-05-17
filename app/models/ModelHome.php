@@ -18,6 +18,7 @@ class ModelHome extends ClassConexao
     $this->db->bindParam(":PART", $PART, \PDO::PARAM_STR);  
     $this->db->execute();
     echo "<script>alert('Cadastrado com Sucesso!')</script>";
+   
 }
 
     protected function ListProjetos()

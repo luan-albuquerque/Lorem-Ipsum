@@ -67,14 +67,15 @@ class ControllerHome extends ModelHome
         $this->recValores();
 
         $JuncaoP = implode("/", $this->participantes);
-       
+
         $this->UpdateProjeto($this->ID, $this->nomeP, $this->dtinicial, $this->dtfinal, $this->valorP, $this->risco, $JuncaoP);
     }
 
-    public function Cadastrar(){
-    $this->recValores();
-  $JuncaoP = implode("/", $this->participantes);
-$this->CadastrarProjeto($this->nomeP, $this->dtinicial, $this->dtfinal, $this->valorP, $this->risco, $JuncaoP);
+    public function Cadastrar()
+    {
+        $this->recValores();
+        $JuncaoP = implode("/", $this->participantes);
+        $this->CadastrarProjeto($this->nomeP, $this->dtinicial, $this->dtfinal, $this->valorP, $this->risco, $JuncaoP);
     }
 
 
