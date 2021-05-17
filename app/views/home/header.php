@@ -26,7 +26,27 @@
         document.getElementById('resultado').innerHTML ="Seu Retorno Será de= "+retorno;
 
       }
+
     }
+
+    function formExcluir(){  
+        var msg = confirm("Atenção: Deseja Excluir esse Registro?");
+    if (msg){
+      
+        alert("Arquivo excluido com sucesso!");
+       document.getElementByName('Excluir').submit();
+    }
+    else{
+        alert("Operação Cancelada, o Registro não será Excluído!");
+        addEventListener('submit', function (e) { e.preventDefault(); });
+
+    }
+
+
+}
+    
+
+
     </script>
 
 <script src="<?php echo DIRJS?>/meujs.js"></script>
