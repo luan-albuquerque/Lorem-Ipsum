@@ -12,7 +12,18 @@
 
 
 
+    function calcular() {
 
+        var n = parseInt(document.getElementById('idinvestS').value);
+        var risco = parseInt(document.getElementById('risco').value);
+          var retorno; 
+        if(risco==0){ retorno = n * 0.05; }
+        if(risco==1){ retorno = n * 0.1; }
+        if(risco==2){ retorno = n * 0.2; } 
+        
+        document.getElementById('resultado').innerHTML ="Seu Retorno Será de = "+retorno;
+
+      }
     </script>
 
 <script src="<?php echo DIRJS?>/meujs.js"></script>
