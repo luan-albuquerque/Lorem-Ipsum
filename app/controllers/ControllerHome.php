@@ -7,7 +7,7 @@ use Src\Classes\ClassRender;
 
 class ControllerHome
 {
-    private $nomeP, $dtinicial, $dtfinal, $participantes, $valorP, $risco, $Array;
+    private $nomeP, $dtinicial, $dtfinal, $participantes, $valorP, $risco, $Array,$codDel;
     public function __construct()
     {
         $Render = new ClassRender;
@@ -39,6 +39,8 @@ class ControllerHome
         if (isset($_POST['name'])) {
             $this->participantes = $_POST['name'];
         }
+        if(isset($_POST['id_cod'])){
+            $this->codDel = $_POST['id_cod'];        }
     }
 
 
@@ -50,7 +52,7 @@ class ControllerHome
     {
 
         echo "
-        <form id='formexcluir' method='POST' action='" . DIRPAGE . "home/Deletar-Perfume'>
+        <form id='formexcluir' method='POST' action='".DIRPAGE."home/Deletar-Projeto'>
         <table cellspacing='0' cellpadding='4' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
 	
         <!--DEF DE COLUNAS -->
@@ -89,7 +91,7 @@ class ControllerHome
 
             <td> 
             <label class='btn-action glyphicons btn-info play_button' id='l1' for='Teste'>
-            <a title='Simular Investimento' data-toggle='modal' data-target='#ModalInvest'>
+            <a title='Simular Investimento'  href='" . DIRPAGE . "home/Simulação-de-Investimento/30000/1'>
         
             <i></i></a></label> </td>
 
@@ -100,8 +102,8 @@ class ControllerHome
 
             <td>
             
-            <input class='offCheckbox' type='checkbox' id='Teste' name='id_cod[]' value='Teste'>
-            <label class='btn-action glyphicons asel bin' id='l1' for='Teste'>
+            <input class='offCheckbox' type='checkbox' id='1' name='id_cod[]' value='Teste'>
+            <label class='btn-action glyphicons asel bin' id='l1' for='1'>
             <a title='Excluir'> 
             <i></i></a></label> </td>
 
@@ -111,52 +113,65 @@ class ControllerHome
 
             ";
         //}
-        $this->ModalInvest();
-        $this->ModalParticipantes();
+  
 
         echo "
         <!--FIM DO TR DE ADIÇÃO-->
 	       </table>
           <hr>
            <input n class='redirect btn btn-primary' value='Excluir' for='formexcluir' type='submit'>
+
            </form>";
+          
+           $this->ModalParticipantes();
     }
 
 
-    private function ModalInvest()
+    public function Invest($Valor,$Risco)
     {
 
-        echo "<div class='modal fade' id='ModalInvest' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+        echo "
+        <script>window.onload = function() { document.getElementById('modalinvest').click(); };</script>
+        <input type='hidden' id='modalinvest' class='btn btn-primary'  data-toggle='modal' data-target='#ModalInvest'>
+    
+<div class='modal fade' id='ModalInvest' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
 <div class='modal-dialog' role='document'>
   <div class='modal-content'>
     <div class='modal-header'>
       <h5 class='modal-title' id='exampleModalLabel'>Simulação de Investimento</h5>
-      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-        <span aria-hidden='true'>&times;</span>
-      </button>
-    </div>
+       </div>
     <div class='modal-body'>
-       
+           
     <div class='span4'>
-    <div class='control-group'>
-        <label class='control-label'> Valor do Investimento </label>
-        <div class='controls'>
-            <div class='input-append'>
-                <input name='ninvest' type='number' id='idinvest' class='span12' required>
-            </div>
-        </div>
-    </div>
-</div>
+      <div class='control-group'>
+          <label class='control-label'> Valor do Investimento </label>
+           <div class='controls'>
+              <div class='input-append'>
+                <input name='ninvest' type='number' id='idinvestS' min='$Valor' placeholder='$Valor'  required>
+               <input type='hidden' id='risco' value='$Risco'>
+                </div>
+           </div>
+       </div>
 
+       <div id='resultado'>
 
+           </div>
 
-    </div>
-    <div class='modal-footer'>
-      <button type='button' class='btn btn-primary'>Simular</button>
-    </div>
   </div>
-</div>
-</div> ";
+  
+    </div>
+  
+
+    
+    <div class='modal-footer'>
+      <inpuy type='submit' onclick='calcular()' class='btn btn-primary value='Simular'>
+     </div>
+  </div>
+
+  </div>
+</div> 
+
+";
     }
 
 
@@ -326,5 +341,11 @@ class ControllerHome
         $this->recValores();
 
     echo $this->participantes;
+    }
+
+    public function Delete(){
+        $this->recValores();
+        var_dump($this->codDel);
+
     }
 }
