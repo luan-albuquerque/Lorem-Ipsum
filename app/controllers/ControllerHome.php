@@ -2,11 +2,12 @@
 
 namespace App\Controllers;
 
-use FFI;
+use App\models\ModelHome;
+use DateTime;
 use Src\Classes\ClassRender;
 
-class ControllerHome
-{
+class ControllerHome extends ModelHome {
+
     private $nomeP, $dtinicial, $dtfinal, $participantes, $valorP, $risco, $Array,$codDel;
     public function __construct()
     {
@@ -50,7 +51,7 @@ class ControllerHome
 
     public function Lista_de_Projetos()
     {
-
+          $result = $this->ListProjetos();
         echo "
         <form id='formexcluir' method='POST' action='".DIRPAGE."home/Deletar-Projeto'>
         <table cellspacing='0' cellpadding='4' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
@@ -73,46 +74,52 @@ class ControllerHome
         <!-- TR DE VALORES ACRESCENTA -->
     ";
 
-        // foreach ($result as $dados) {
-        //
-        //     $dataC = new DateTime();
-        //     $dt = $dataC->format('d/m/Y');
+        foreach ($result as $dados) {
+    
+           $dataI = new DateTime($dados['DTI']);
+            $dtI = $dataI->format('d/m/Y');
+            $dataF = new DateTime($dados['DTF']);
+            $dtF = $dataI->format('d/m/Y');
         echo "
         <tr align='center' style='background-color:#E3EAEB;'>
 			
-            <td><STRONG>Teste</STRONG></td>
-            <td>Teste</td>
-            <td>Teste</td>
-            <td>Teste</td>
-            <td>Teste</td>
-            <td>Teste</td>
+            <td><STRONG>$dados[COD]</STRONG></td>
+            <td>$dados[NP]</td>
+            <td>$dtI</td>
+            <td>$dtF</td>
+            <td>$dados[V]</td>
+            <td>$dados[R]</td>
+          
    <!-- Button trigger modal -->
 
 
             <td> 
             <label class='btn-action glyphicons btn-info play_button' id='l1' for='Teste'>
-            <a title='Simular Investimento'  href='" . DIRPAGE . "home/Simulação-de-Investimento/30000/1'>
+            <a title='Simular Investimento'  href='" . DIRPAGE . "home/Simulação-de-Investimento/$dados[V]/$dados[R]'>
         
             <i></i></a></label> </td>
 
             <td> <input type='hidden' id='Teste' name=''>
             <label class='btn-action glyphicons btn-info group' id='l1' for='Teste'>
             <a title='Participantes' data-toggle='modal' data-target='#ModalParticipantes'> 
-            <i></i></a></label> </td>
+            <i></i></a></label> </td>";
 
+            $this->ModalParticipantes($dados['P']);
+
+            echo "
             <td>
             
-            <input class='offCheckbox' type='checkbox' id='1' name='id_cod[]' value='Teste'>
-            <label class='btn-action glyphicons asel bin' id='l1' for='1'>
+            <input class='offCheckbox' type='checkbox' id='$dados[COD]' name='id_cod[]' value='$dados[COD]'>
+            <label class='btn-action glyphicons asel bin' id='l1' for='$dados[COD]'>
             <a title='Excluir'> 
             <i></i></a></label> </td>
 
-            <td><a title='Editar' href='" . DIRPAGE . "home/Formulario-de-Edição-Projeto/' target='blank'  class='btn-action glyphicons pencil btn-info'><i></i></a></td>
+            <td><a title='Editar' href='" . DIRPAGE . "home/Formulario-de-Edição-Projeto/$dados[COD]' target='blank'  class='btn-action glyphicons pencil btn-info'><i></i></a></td>
            
 	       </tr>
 
             ";
-        //}
+        }
   
 
         echo "
@@ -123,7 +130,7 @@ class ControllerHome
 
            </form>";
           
-           $this->ModalParticipantes();
+          
     }
 
 
@@ -133,7 +140,7 @@ class ControllerHome
         echo "
         <script>window.onload = function() { document.getElementById('modalinvest').click(); };</script>
         <input type='hidden' id='modalinvest' class='btn btn-primary'  data-toggle='modal' data-target='#ModalInvest'>
-    
+   
 <div class='modal fade' id='ModalInvest' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
 <div class='modal-dialog' role='document'>
   <div class='modal-content'>
@@ -164,27 +171,21 @@ class ControllerHome
 
     
     <div class='modal-footer'>
-      <inpuy type='submit' onclick='calcular()' class='btn btn-primary value='Simular'>
+      <input type='submit' onclick='calcular()' class='btn btn-primary value='Simular' >
      </div>
   </div>
 
   </div>
 </div> 
 
+
 ";
     }
 
 
-    private function ModalParticipantes()
+    private function ModalParticipantes($ArratP)
     {
-        $this->Array = array(
-            "Luan Albuquerque",
-            "Pedro Vitor Albuquerque dos Santos",
-            "Felipe Oliveira"
-        );
-
-
-
+        $Participantes = explode("/", rtrim($ArratP,FILTER_SANITIZE_STRING));
         echo "<div class='modal fade' id='ModalParticipantes' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
 <div class='modal-dialog' role='document'>
   <div class='modal-content'>
@@ -196,7 +197,7 @@ class ControllerHome
     </div>
     <div class='modal-body'>";
 
-        foreach ($this->Array as $dados) {
+        foreach ($Participantes as $dados) {
             echo "$dados</br>";
         }
 
@@ -208,8 +209,10 @@ class ControllerHome
     }
 
 
-    public function FormUpdate()
+    public function FormUpdate($COD)
     {
+        $dados = $this->ListProjetosEsp($COD);
+
         echo "<!--MODAL UPDATE-->
 
     <script>window.onload = function() { document.getElementById('modalshow').click(); };</script>
@@ -231,7 +234,7 @@ class ControllerHome
                                 <label class='control-label'>Nome do Projeto</label>
                                 <div class='controls'>
                                     <div class='input-append'>
-                                        <input name='nprojeto' type='text' id='idprojeto' class='span12' placeholder='Ex: Controle de Servos' required>
+                                        <input name='nprojeto' type='text' id='idprojeto' class='span12' value='$dados[NP]' required>
                                     </div>
                                 </div>
                             </div>
@@ -242,7 +245,7 @@ class ControllerHome
                                 <label class='control-label'>Data de início</label>
                                 <div class='controls'>
                                     <div class='input-append'>
-                                        <input name='ndtinicio' type='date' id='iddtinicio' class='span11' required>
+                                        <input name='ndtinicio' type='date' id='iddtinicio' class='span11' value='$dados[DTI]' required>
                                     </div>
                                 </div>
                             </div>
@@ -253,7 +256,7 @@ class ControllerHome
                                 <label class='control-label'>Data de Término</label>
                                 <div class='controls'>
                                     <div class='input-append'>
-                                        <input name='ndtfim' type='date' id='iddtfim' class='span11' required>
+                                        <input name='ndtfim' type='date' id='iddtfim' class='span11' value='$dados[DTF]' required>
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +272,7 @@ class ControllerHome
                                 <label class='control-label'> Valor do Projeto </label>
                                 <div class='controls'>
                                     <div class='input-append'>
-                                        <input name='nvalor' type='number' id='idvalor' class='span11' required>
+                                        <input name='nvalor' type='number' id='idvalor' class='span11' value='$dados[V]' required>
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +308,7 @@ class ControllerHome
                   
                   <table cellspacing='0' cellpadding='4' border='0' style='color:#333333;width:100%;border-collapse:collapse;'>
 	             ";
-        $Lista = $this->ArrayTeste();
+        $Lista = explode("/", rtrim($dados['P'],FILTER_SANITIZE_STRING));
         $I = 0;
         foreach ($Lista as $dados) {
             echo " <tr id='$I'><td><input name='name[]' value='$dados'></td> 
@@ -327,21 +330,11 @@ class ControllerHome
         </div> <!-- FIM DO MODAL-->";
     }
 
-    public function ArrayTeste()
-    {
-        $Array = array(
-            "Luan Albuquerque dos Santos",
-            "Pedro Vitor",
-        );
-        return $Array;
-    }
-
     public function Update()
-    {
-        $this->recValores();
+    {   $this->recValores();
 
-    echo $this->participantes;
-    }
+
+}
 
     public function Delete(){
         $this->recValores();
