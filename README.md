@@ -20,7 +20,7 @@ Memória RAM 16 GB
 ```
 Realize o dowload do dump do banco utlizado 
 ```
-[BancoSQL](https://github.com/luan-albuquerque/Lorem-Ipsum/) 
+[BancoSQL](https://github.com/luan-albuquerque/Lorem-Ipsum/LOREMIPSUM.sql) 
 ```
 Realize o GIT CLONE do Repositorio Lorem-Ipsum na pasta WWW/html/ do apache2
 Em outras aplicações:
