@@ -2,7 +2,7 @@
     <h4 class="glyphicons notes_2">
         <i>Cadastro de Projetos</i>
     </h4>
-    <form>
+    <form method="post" action="<?php echo DIRPAGE?>home/Cadastrar-Projeto">
         <!--FORM DE CADASTRO DE PROJETOS-->
         <div class="row-fluid">
 
