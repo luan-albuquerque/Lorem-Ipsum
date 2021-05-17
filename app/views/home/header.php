@@ -12,6 +12,16 @@
 
 
 
+
+        function add_rowEdit() {
+            $rowno = $("#employee_table2 tr").length;
+
+            $rowno = $rowno + 1;
+            $("#employee_table2 tr:last").after("<tr id='"+ $rowno +"'><td><input  class='span8'  type='text' name='name[]' placeholder='Nome Completo' required><input class='btn btn-primary' type='button' value='Excluir' onclick=delete_row('"+ $rowno+"')></td></tr>");
+        }
+
+      
+
     function calcular() {
         var n = parseInt(document.getElementById('idinvestS').value);
         var risco = parseInt(document.getElementById('risco').value);
@@ -42,8 +52,23 @@
 
     }
 
-
 }
+
+function checkFormUpdate(){
+    var msg = confirm("Atenção: Deseja Alterar esse Registro?");
+    if (msg){
+      
+        alert("Arquivo Alterado com sucesso!");
+       document.getElementById('subAlterar').submit();
+    }
+    else{
+        alert("Operação Cancelada, o Registro não será Alterado!");
+        addEventListener('submit', function (e) { e.preventDefault(); });
+
+    }
+
+    }
+
     
 
 
